@@ -5,7 +5,7 @@ class Item:
     def __init__(self, name: str,price: float,quantity=0):
         # assert statements are a used keyword that is used to check if there's a match with what is expected
         # Run validations to the recieved arguments
-        assert price >= 0, f"Price {price} must be greater than zero!"
+        assert price >= 0 and price <= 2000, f"Price {price} must be greater than zero and lower than 2000!"
         assert quantity >= 0, f"Quantity {quantity} must be greater than zero!"
 
         # Assign to self object
