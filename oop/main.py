@@ -1,3 +1,5 @@
+import csv
+
 class Item:
     # The function init will be used whenever the class or object is called
     # Variable types can be added to the inputs to make them more robus
@@ -26,16 +28,52 @@ class Item:
     def apply_discount(self):
         self.price = self.price * Item.pay_rate
 
-    def instantiate_from_csv(self,):
+    @classmethod
+    def instance_from_csv(cls):
+        with open('items.csv','r') as f:
+            reader = csv.DictReader(f)
+            items = list(reader)
+
+        for item in items:
+            Item(
+                name = item.get('name'),
+                price = float(item.get('price')),
+                quantity = int(item.get('quantity')),
+            )
+
+    @staticmethod
+    def is_integer(num):
+        # We will count out the floats that are point 0
+        # For i.e: 5.0, 10.0
+        if isinstance(num,float):
+            # Count out the floats that are point 0
+            return num.is_integer()
+        elif isinstance(num,int):
+            return True
+        else:
+            return False
         
+
     # Function to represent this item
     def __repr__(self):
         return f"Item('{self.name}','{self.price}','{self.quantity}')"
 
-item1 = Item("Phone",100,5)
-item2 = Item("Laptop",1000,3)
-item3 = Item("Cable",10,5)
-item4 = Item("Mouse",50,5)
-item5 = Item("Keyboard",75,5)
+class Phone(Item):
+     def __init__(self, name: str,price: float,quantity=0):
+        # assert statements are a used keyword that is used to check if there's a match with what is expected
+        # Run validations to the recieved arguments
+        assert price >= 0 and price <= 2000, f"Price {price} must be greater than zero and lower than 2000!"
+        assert quantity >= 0, f"Quantity {quantity} must be greater than zero!"
 
-print(Item.all)
+        # Assign to self object
+        self.name = name
+        self.price = price
+        self.quantity = quantity
+
+        # Actions to execute
+        Item.all.append(self)
+
+phone1 = Phone("jscPhonev10",500,5)
+phone1.broken_phones = 1
+phone2 = Phone("jscPhonev20",700,5)
+phone2.broken_phones = 1
