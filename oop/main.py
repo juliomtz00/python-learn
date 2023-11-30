@@ -59,7 +59,7 @@ class Item:
         return f"Item('{self.name}','{self.price}','{self.quantity}')"
 
 class Phone(Item):
-     def __init__(self, name: str,price: float,quantity=0):
+     def __init__(self, name: str,price: float,quantity=0,broken_phones=0):
         # assert statements are a used keyword that is used to check if there's a match with what is expected
         # Run validations to the recieved arguments
         assert price >= 0 and price <= 2000, f"Price {price} must be greater than zero and lower than 2000!"
@@ -71,9 +71,8 @@ class Phone(Item):
         self.quantity = quantity
 
         # Actions to execute
-        Item.all.append(self)
+        Phone.all.append(self)
 
-phone1 = Phone("jscPhonev10",500,5)
-phone1.broken_phones = 1
-phone2 = Phone("jscPhonev20",700,5)
-phone2.broken_phones = 1
+phone1 = Phone("jscPhonev10",500,5,1)
+print(phone1.calculate_total_prince())
+phone2 = Phone("jscPhonev20",700,5,1)
